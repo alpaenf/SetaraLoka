@@ -31,7 +31,10 @@ export default function VolunteerNavbar() {
           <div className="flex items-center gap-6">
             <Link href={route('dashboard.relawan')} className="flex items-center gap-2" aria-label="SetaraLoka">
               <ApplicationLogo srcLight="/images/logo.png" srcDark="/images/logo.png" className="h-8 w-auto rounded-sm bg-white" />
-              <span className="hidden sm:inline font-semibold tracking-tight text-gray-900">SetaraLoka</span>
+              <span className="hidden sm:inline font-semibold tracking-tight">
+                <span className="text-cyan-600">Setara</span>
+                <span className="text-amber-600">Loka</span>
+              </span>
             </Link>
             <div className="hidden md:flex items-center gap-1">
               {items.filter(i => exists(i.route)).map(i => {

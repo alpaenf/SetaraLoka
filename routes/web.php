@@ -113,6 +113,13 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
+    // Resume routes with slug binding
+    Route::resource('resumes', \App\Http\Controllers\ResumeController::class)
+        ->parameters(['resumes' => 'resume:slug']);
+    
+    // Resume PDF export (also use slug binding)
+    Route::get('/resumes/{resume:slug}/pdf', [ResumeExportController::class, 'show'])->name('resumes.pdf');
+
     Route::post('/ai/summarize', [AccessMateController::class, 'summarize'])->middleware('throttle:20,1')->name('ai.summarize');
     Route::post('/ai/tts', [AccessMateController::class, 'tts'])->middleware('throttle:20,1')->name('ai.tts');
 
@@ -125,8 +132,6 @@ Route::middleware(['auth','verified'])->group(function () {
         ]);
     })->name('map');
 
-    Route::get('/resumes/{resume}/pdf', [ResumeExportController::class, 'show'])->name('resumes.pdf');
-
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.readAll');
 
@@ -138,10 +143,17 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/dashboard/volunteer/data', \App\Http\Controllers\VolunteerDashboardDataController::class)->name('dashboard.volunteer.data');
     Route::get('/dashboard/disabled/data', DisabledDashboardDataController::class)->name('dashboard.disabled.data');
 
+    // Disabled User Profile
+    Route::middleware(['role:' . User::ROLE_PENYANDANG_DISABILITAS])->group(function() {
+        Route::get('/disabilitas/profile', [\App\Http\Controllers\DisabledController::class, 'profile'])->name('disabled.profile');
+        Route::put('/disabilitas/profile', [\App\Http\Controllers\DisabledController::class, 'updateProfile'])->name('disabled.profile.update');
+    });
+
     // Events
     Route::get('/events', [EventController::class, 'index'])->name('events.index');
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
     Route::post('/events/{event}/interest', [EventController::class, 'toggleInterest'])->name('events.interest');
+    Route::post('/events/{event}/register', [EventController::class, 'register'])->name('events.register');
     // QR check-in (signed)
     Route::get('/events/{event}/checkin', [\App\Http\Controllers\EventCheckinController::class, '__invoke'])
         ->middleware('signed')
@@ -249,6 +261,7 @@ Route::middleware(['auth','verified'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/category', [ProfileController::class, 'updateCategory'])->name('profile.update.category');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

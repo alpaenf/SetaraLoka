@@ -32,12 +32,17 @@ class EventController extends Controller
         $event->loadCount('interestedUsers')->load('user');
         $user = auth()->user();
         $isInterested = $user?->interestedEvents()->where('event_id', $event->id)->exists();
-    $verified = $user?->interestedEvents()->where('event_id', $event->id)->wherePivotNotNull('verified_at')->exists();
-    $event->has_certificate = $event->end_at && Carbon::parse($event->end_at)->isPast() && $verified;
+        $verified = $user?->interestedEvents()->where('event_id', $event->id)->wherePivotNotNull('verified_at')->exists();
+        $event->has_certificate = $event->end_at && Carbon::parse($event->end_at)->isPast() && $verified;
+        
+        // Check if user is registered (using participants relationship if exists, fallback to interested)
+        $isRegistered = $user?->participants()->where('event_id', $event->id)->exists();
+        
         $canManageParticipants = ($event->user_id && $user && $event->user_id === $user->id) || ($user && $user->hasRole('admin'));
         return Inertia::render('Events/Show', [
             'event' => $event,
             'isInterested' => $isInterested,
+            'isRegistered' => $isRegistered,
             'canManageParticipants' => $canManageParticipants,
         ]);
     }
@@ -52,5 +57,34 @@ class EventController extends Controller
             $user->interestedEvents()->attach($event->id);
         }
         return back();
+    }
+
+    public function register(Request $request, Event $event)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return back()->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
+        // Check if already registered
+        if ($user->participants()->where('event_id', $event->id)->exists()) {
+            return back()->with('error', 'Anda sudah terdaftar di acara ini.');
+        }
+
+        // Check capacity
+        if ($event->max_participants && $event->participants_count >= $event->max_participants) {
+            return back()->with('error', 'Maaf, acara sudah penuh.');
+        }
+
+        // Register user to event
+        $user->participants()->attach($event->id, [
+            'status' => 'registered',
+            'registered_at' => now(),
+        ]);
+
+        // Increment participants count
+        $event->increment('participants_count');
+
+        return back()->with('success', 'Anda berhasil terdaftar di acara ini!');
     }
 }

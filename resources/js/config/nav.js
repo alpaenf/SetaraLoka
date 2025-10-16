@@ -41,24 +41,27 @@ const base = {
   posts: { label: 'Forum', routeName: 'posts.index', icon: '💬' },
   events: { label: 'Acara', routeName: 'events.index', icon: '🗓️' },
   jobs: { label: 'Lowongan', routeName: 'jobs.index', icon: '💼' },
+  resumes: { label: 'Resume', routeName: 'resumes.index', icon: '📄' },
   notifications: { label: 'Notifikasi', routeName: 'notifications.index', icon: '🔔' },
   resources: { label: 'Sumber Daya', routeName: 'resources.index', icon: '📚' }, // to implement later
   programs: { label: 'Program', routeName: 'organization.programs', icon: '📋' },
   organizationEvents: { label: 'Acara Kami', routeName: 'organization.events', icon: '🗓️' },
   profile: { label: 'Profil', routeName: 'organization.profile', icon: '👤' },
   volunteerProfile: { label: 'Profil', routeName: 'volunteer.profile', icon: '👤' },
+  disabledProfile: { label: 'Profil', routeName: 'disabled.profile', icon: '👤' },
   volunteerOpportunities: { label: 'Peluang', routeName: 'volunteer.opportunities', icon: '🤝' },
   volunteerCertificates: { label: 'Sertifikat', routeName: 'volunteer.certificates', icon: '📜' },
 };
 
 export const ROLE_NAV = {
-  disabled: [{ ...base.dashboard, routeName: 'dashboard.disabilitas' }, base.posts, base.events, base.jobs, base.notifications],
+  disabled: [{ ...base.dashboard, routeName: 'dashboard.disabilitas' }, base.posts, base.events, base.jobs, base.resumes, base.disabledProfile, base.notifications],
   volunteer: [
     { ...base.dashboard, routeName: 'dashboard.relawan' },
     base.jobs,
     base.volunteerOpportunities,
     base.posts,
     base.events,
+    base.resumes,
     base.volunteerProfile,
     base.volunteerCertificates,
     base.notifications

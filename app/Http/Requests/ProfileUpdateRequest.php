@@ -25,6 +25,11 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'kategori_disabilitas' => [
+                'nullable',
+                'string',
+                Rule::in(['tidak_bisa_berjalan', 'tidak_bisa_berbicara', 'tidak_bisa_melihat', 'tidak_bisa_mendengar']),
+            ],
         ];
     }
 }

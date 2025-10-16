@@ -80,6 +80,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Event::class, 'event_interests')->withTimestamps()->withPivot('verified_at');
     }
 
+    public function participants()
+    {
+        return $this->belongsToMany(Event::class, 'event_user_pivot')
+            ->withTimestamps()
+            ->withPivot('status', 'registered_at', 'attended_at');
+    }
+
     public function jobApplications()
     {
         return $this->hasMany(JobApplication::class);
@@ -100,6 +107,11 @@ class User extends Authenticatable
         'email',
         'password',
         'kategori_disabilitas',
+        'profile_photo_path',
+        'bio',
+        'skills',
+        'phone',
+        'city',
     ];
 
     /**

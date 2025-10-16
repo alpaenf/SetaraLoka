@@ -31,13 +31,16 @@ export default function CompanyNavbar() {
     : `px-3 py-1.5 rounded-md ${accentClasses.bg} ${accentClasses.text} ${accentClasses.hoverBg} text-sm focus:outline-none ${accentClasses.ring} focus:ring-offset-2`;
 
   return (
-    <nav className={`fixed inset-x-0 top-0 z-50 border-b border-gray-200 ${accentClasses.bg.replace('bg-','bg-')} bg-white/95 backdrop-blur-sm shadow-sm`} aria-label="Company primary">
+    <nav className={`fixed inset-x-0 top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm shadow-sm`} aria-label="Company primary">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-6">
             <Link href={route('dashboard.perusahaan')} className="flex items-center gap-2" aria-label="SetaraLoka">
               <ApplicationLogo srcLight="/images/logo.png" srcDark="/images/logo.png" className="h-8 w-auto rounded-sm bg-white" />
-              <span className="hidden sm:inline font-semibold tracking-tight text-gray-900">SetaraLoka</span>
+              <span className="hidden sm:inline font-semibold tracking-tight">
+                <span className="text-cyan-600">Setara</span>
+                <span className="text-amber-600">Loka</span>
+              </span>
             </Link>
             <div className="hidden md:flex items-center gap-1">
               {items.filter(i => exists(i.route)).map(i => {

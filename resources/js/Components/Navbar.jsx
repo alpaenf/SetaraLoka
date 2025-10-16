@@ -26,7 +26,10 @@ export default function Navbar({ role: explicitRole }) {
           <div className="flex items-center gap-6 min-w-0">
             <Link href="/" className="flex items-center gap-2" aria-label="Beranda">
               <ApplicationLogo srcLight="/images/logo.png" srcDark="/images/logo.png" className="block h-8 w-auto rounded-sm bg-white" />
-              <span className="hidden font-semibold sm:inline text-gray-900">SetaraLoka</span>
+              <span className="hidden font-semibold sm:inline">
+                <span className="text-cyan-600">Setara</span>
+                <span className="text-amber-600">Loka</span>
+              </span>
             </Link>
             <div className="hidden md:flex items-center gap-1" role="menubar">
               {items.filter(i => route().has(i.routeName)).map(i => {

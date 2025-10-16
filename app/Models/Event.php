@@ -45,4 +45,11 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class, 'event_interests')->withTimestamps()->withPivot('verified_at');
     }
+
+    public function participants()
+    {
+        return $this->belongsToMany(User::class, 'event_user_pivot')
+            ->withTimestamps()
+            ->withPivot('status', 'registered_at', 'attended_at');
+    }
 }

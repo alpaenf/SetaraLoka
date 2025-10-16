@@ -160,9 +160,9 @@ export default function EventsIndex({ events }) {
                   >
                     {/* Event Image */}
                     <div className="relative h-48 bg-gradient-to-br from-cyan-100 to-blue-100 overflow-hidden">
-                      {ev.image_path ? (
+                      {ev.image_url ? (
                         <img 
-                          src={ev.image_path} 
+                          src={ev.image_url} 
                           alt={ev.title} 
                           className="w-full h-full object-cover transition-transform group-hover:scale-105" 
                         />

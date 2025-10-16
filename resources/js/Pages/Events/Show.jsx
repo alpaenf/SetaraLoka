@@ -22,9 +22,9 @@ export default function EventShow({ event, isInterested, isRegistered = false, c
 
   const getLocationBadge = (locationType) => {
     const badges = {
-      online: { color: 'bg-green-100 text-green-700 border-green-200', icon: '💻', label: 'Online' },
-      hybrid: { color: 'bg-blue-100 text-blue-700 border-blue-200', icon: '🔄', label: 'Hybrid' },
-      offline: { color: 'bg-gray-100 text-gray-700 border-gray-200', icon: '📍', label: 'Offline' }
+      online: { color: 'bg-green-100 text-green-700 border-green-200', label: 'Online' },
+      hybrid: { color: 'bg-blue-100 text-blue-700 border-blue-200', label: 'Hybrid' },
+      offline: { color: 'bg-gray-100 text-gray-700 border-gray-200', label: 'Offline' }
     };
     return badges[locationType] || badges.offline;
   };
@@ -78,9 +78,9 @@ export default function EventShow({ event, isInterested, isRegistered = false, c
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             {/* Event Image */}
             <div className="relative h-80 bg-gradient-to-br from-cyan-100 to-blue-100">
-              {event.image_path ? (
+              {event.image_url ? (
                 <img 
-                  src={event.image_path} 
+                  src={event.image_url} 
                   alt={event.title} 
                   className="w-full h-full object-cover" 
                 />
@@ -95,24 +95,24 @@ export default function EventShow({ event, isInterested, isRegistered = false, c
               {/* Badges Overlay */}
               <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                 <span className={`px-3 py-1.5 rounded-lg text-sm font-medium ${locationBadge.color} border backdrop-blur-sm shadow-sm`}>
-                  {locationBadge.icon} {locationBadge.label}
+                  {locationBadge.label}
                 </span>
                 
                 {event.is_wheelchair_accessible && kategori === 'tidak_bisa_berjalan' && (
                   <span className="px-3 py-1.5 rounded-lg text-sm font-medium bg-purple-100 text-purple-700 border border-purple-200 backdrop-blur-sm shadow-sm">
-                    ♿ Wheelchair Accessible
+                    Wheelchair Accessible
                   </span>
                 )}
                 
                 {event.has_live_caption && kategori === 'tidak_bisa_berbicara' && (
                   <span className="px-3 py-1.5 rounded-lg text-sm font-medium bg-teal-100 text-teal-700 border border-teal-200 backdrop-blur-sm shadow-sm">
-                    💬 Live Caption
+                    Live Caption
                   </span>
                 )}
 
                 {isRegistered && (
                   <span className="px-3 py-1.5 rounded-lg text-sm font-medium bg-green-600 text-white border border-green-700 shadow-lg">
-                    ✓ Sudah Terdaftar
+                    Sudah Terdaftar
                   </span>
                 )}
               </div>
@@ -204,7 +204,7 @@ export default function EventShow({ event, isInterested, isRegistered = false, c
                       ></div>
                     </div>
                     {isFull && (
-                      <p className="text-sm text-red-600 font-medium mt-2">⚠️ Acara sudah penuh</p>
+                      <p className="text-sm text-red-600 font-medium mt-2">Acara sudah penuh</p>
                     )}
                   </div>
                 </div>
