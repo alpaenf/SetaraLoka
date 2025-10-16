@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Filament\Resources\Volunteers\Pages;
+
+use App\Filament\Resources\Volunteers\VolunteerResource;
+use Filament\Resources\Pages\ViewRecord;
+
+class ViewVolunteer extends ViewRecord
+{
+    protected static string $resource = VolunteerResource::class;
+}

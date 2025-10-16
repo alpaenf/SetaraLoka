@@ -1,0 +1,52 @@
+import React from 'react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import RoleShell from '@/Layouts/RoleShell';
+
+export default function Edit() {
+  const { program } = usePage().props;
+  const { data, setData, put, processing, errors } = useForm({
+    title: program.title || '',
+    description: program.description || '',
+    status: program.status || 'draft',
+  });
+
+  const submit = (e) => {
+    e.preventDefault();
+    put(route('organization.programs.update', program.id));
+  };
+
+  return (
+    <RoleShell role="organization">
+      <Head title={`Edit: ${program.title}`} />
+      <div className="max-w-3xl mx-auto p-4">
+        <div className="mb-4">
+          <h1 className="text-xl font-semibold">Edit Program</h1>
+        </div>
+        <form onSubmit={submit} className="space-y-4 bg-white p-4 rounded-md border">
+          <div>
+            <label className="block text-sm font-medium">Judul</label>
+            <input type="text" className="mt-1 w-full rounded border-gray-300" value={data.title} onChange={e => setData('title', e.target.value)} />
+            {errors.title && <div className="text-sm text-red-600">{errors.title}</div>}
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Deskripsi</label>
+            <textarea className="mt-1 w-full rounded border-gray-300" rows="6" value={data.description} onChange={e => setData('description', e.target.value)} />
+            {errors.description && <div className="text-sm text-red-600">{errors.description}</div>}
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Status</label>
+            <select className="mt-1 w-full rounded border-gray-300" value={data.status} onChange={e => setData('status', e.target.value)}>
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+            {errors.status && <div className="text-sm text-red-600">{errors.status}</div>}
+          </div>
+          <div className="flex items-center gap-2">
+            <button disabled={processing} className="px-3 py-2 rounded bg-amber-600 text-white text-sm hover:bg-amber-500 disabled:opacity-50">Simpan</button>
+            <Link href={route('organization.programs')} className="px-3 py-2 rounded border text-sm">Batal</Link>
+          </div>
+        </form>
+      </div>
+    </RoleShell>
+  );
+}

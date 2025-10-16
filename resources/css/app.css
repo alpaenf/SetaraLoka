@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* High contrast mode overrides */
+.hc-mode {
+	--hc-bg: #ffffff;
+	--hc-text: #111111;
+	--hc-border: #000000;
+	--hc-accent: #000000;
+}
+.hc-mode :where(h1,h2,h3,h4,h5,h6){
+	letter-spacing: -0.01em;
+}
+.hc-mode .shadow-sm { box-shadow: 0 0 0 1.5px var(--hc-border) !important; }
+.hc-mode .border { border-color: var(--hc-border) !important; }
+.hc-mode { background-color: var(--hc-bg); color: var(--hc-text); }
+.hc-mode a { color: #0a4bff; text-decoration: underline; }
+.hc-mode .text-gray-600, .hc-mode .text-gray-500 { color: #222 !important; }
+.hc-mode .text-indigo-700 { color: #000 !important; }
+.hc-mode .hc-surface { background:#fff !important; color:#000 !important; border:2px solid #000 !important; box-shadow:none !important; }
+.hc-mode nav { background:#ffffff !important; border-bottom:3px solid #000 !important; }
+.hc-mode button, .hc-mode [role=button] { border:2px solid #000 !important; background:#fff !important; color:#000 !important; }
+.hc-mode button:hover { background:#000 !important; color:#fff !important; }
+.hc-mode .hc-badge { background:#000 !important; color:#fff !important; }
+
+/* Improve focus visibility inside hc */
+.hc-mode :focus-visible { outline: 2px solid #000 !important; outline-offset: 2px; }
+
+/* Larger base line-height for readability already handled by container class; additional helpers if needed */
+.leading-relaxed { line-height: 1.7; }

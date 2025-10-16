@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Filament\Resources\Events\Schemas;
+
+use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Schema;
+
+class EventInfolist
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                TextEntry::make('user_id')
+                    ->numeric(),
+                TextEntry::make('title'),
+                TextEntry::make('description')
+                    ->placeholder('-')
+                    ->columnSpanFull(),
+                TextEntry::make('start_at')
+                    ->dateTime(),
+                TextEntry::make('end_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+                TextEntry::make('latitude')
+                    ->numeric()
+                    ->placeholder('-'),
+                TextEntry::make('longitude')
+                    ->numeric()
+                    ->placeholder('-'),
+                TextEntry::make('location_name')
+                    ->placeholder('-'),
+                TextEntry::make('created_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+                TextEntry::make('updated_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+            ]);
+    }
+}
