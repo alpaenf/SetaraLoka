@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('job_postings', function (Blueprint $table) {
-            $table->string('status', 20)->default('pending')->after('benefits');
+            $table->string('status', 20)->default('pending')->after('published_at');
         });
     }
 

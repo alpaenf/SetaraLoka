@@ -123,8 +123,18 @@ export default function Category() {
         router.post(route('disability.category.store'), {
             kategori: selected
         }, {
+            preserveScroll: true,
             onFinish: () => setIsSubmitting(false),
-            onError: () => setIsSubmitting(false)
+            onError: (errors) => {
+                setIsSubmitting(false);
+                console.error('Category submission error:', errors);
+                
+                // Handle CSRF token mismatch (419)
+                if (errors && typeof errors === 'object' && Object.keys(errors).length === 0) {
+                    alert('Sesi Anda telah berakhir. Halaman akan dimuat ulang...');
+                    window.location.reload();
+                }
+            }
         });
     };
 

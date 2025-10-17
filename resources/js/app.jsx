@@ -2,7 +2,7 @@ import '../css/app.css';
 import 'leaflet/dist/leaflet.css'; // Leaflet map styles
 import './bootstrap';
 
-import { createInertiaApp } from '@inertiajs/react';
+import { createInertiaApp, router } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 // OneSignal web SDK via window.OneSignal if loaded separately
@@ -35,4 +35,15 @@ createInertiaApp({
     progress: {
         color: '#4B5563',
     },
+});
+
+// Global error handler for CSRF token mismatch (419)
+router.on('error', (event) => {
+    // Check if it's a 419 error (CSRF token mismatch)
+    if (event.detail?.response?.status === 419) {
+        console.warn('CSRF token expired, reloading page...');
+        if (confirm('Sesi Anda telah berakhir. Halaman akan dimuat ulang untuk melanjutkan.')) {
+            window.location.reload();
+        }
+    }
 });
